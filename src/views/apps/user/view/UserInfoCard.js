@@ -177,12 +177,7 @@ const UserInfoCard = ({ selectedUser }) => {
               {renderUserImg()}
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
-                  {selectedUser !== null ? (
-                    <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
-                      {selectedUser.role}
-                    </Badge>
-                  ) : null}
+                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>                  
                 </div>
               </div>
             </div>
@@ -194,16 +189,16 @@ const UserInfoCard = ({ selectedUser }) => {
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>1.23k</h4>
-                <small>Tasks Done</small>
+                <small>Invoices</small>
               </div>
             </div>
             <div className='d-flex align-items-start'>
               <Badge color='light-primary' className='rounded p-75'>
-                <Briefcase className='font-medium-2' />
+                <Check className='font-medium-2' />
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>568</h4>
-                <small>Projects Done</small>
+                <small>Customers</small>
               </div>
             </div>
           </div>
@@ -251,9 +246,6 @@ const UserInfoCard = ({ selectedUser }) => {
           <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
               Edit
-            </Button>
-            <Button className='ms-1' color='danger' outline onClick={handleSuspendedClick}>
-              Suspended
             </Button>
           </div>
         </CardBody>

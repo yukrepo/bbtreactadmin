@@ -27,47 +27,6 @@ const ProfileHeader = ({ data }) => {
           </div>
         </div>
       </div>
-      <div className='profile-header-nav'>
-        <Navbar container={false} className='justify-content-end justify-content-md-between w-100' expand='md' light>
-          <Button color='' className='btn-icon navbar-toggler' onClick={toggle}>
-            <AlignJustify size={21} />
-          </Button>
-          <Collapse isOpen={isOpen} navbar>
-            <div className='profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0'>
-              <Nav className='mb-0' pills>
-                <NavItem>
-                  <NavLink className='fw-bold' active>
-                    <span className='d-none d-md-block'>Feed</span>
-                    <Rss className='d-block d-md-none' size={14} />
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className='fw-bold'>
-                    <span className='d-none d-md-block'>About</span>
-                    <Info className='d-block d-md-none' size={14} />
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className='fw-bold'>
-                    <span className='d-none d-md-block'>Photos</span>
-                    <Image className='d-block d-md-none' size={14} />
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink className='fw-bold'>
-                    <span className='d-none d-md-block'>Friends</span>
-                    <Users className='d-block d-md-none' size={14} />
-                  </NavLink>
-                </NavItem>
-              </Nav>
-              <Button color='primary'>
-                <Edit className='d-block d-md-none' size={14} />
-                <span className='fw-bold d-none d-md-block'>Edit</span>
-              </Button>
-            </div>
-          </Collapse>
-        </Navbar>
-      </div>
     </Card>
   )
 }
