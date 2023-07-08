@@ -1,40 +1,8 @@
 // ** Icons Import
-import { Mail, MessageSquare, CheckSquare, Calendar, FileText, Circle, ShoppingCart, User, Shield } from 'react-feather'
+import { Mail, MessageSquare, CheckSquare, Calendar, FileText, Circle, ShoppingCart, User, Users, Briefcase, Shield } from 'react-feather'
 
 export default [
-  {
-    header: 'Apps & Pages'
-  },
-  {
-    id: 'email',
-    title: 'Email',
-    icon: <Mail size={20} />,
-    navLink: '/apps/email'
-  },
-  {
-    id: 'chat',
-    title: 'Chat',
-    icon: <MessageSquare size={20} />,
-    navLink: '/apps/chat'
-  },
-  {
-    id: 'todo',
-    title: 'Todo',
-    icon: <CheckSquare size={20} />,
-    navLink: '/apps/todo'
-  },
-  {
-    id: 'calendar',
-    title: 'Calendar',
-    icon: <Calendar size={20} />,
-    navLink: '/apps/calendar'
-  },
-  {
-    id: 'kanban',
-    title: 'Kanban',
-    icon: <CheckSquare size={20} />,
-    navLink: '/apps/kanban'
-  },
+  // invoice
   {
     id: 'invoiceApp',
     title: 'Invoice',
@@ -66,71 +34,59 @@ export default [
       }
     ]
   },
-
+  //estimate
   {
-    id: 'roles-permissions',
-    title: 'Roles & Permissions',
-    icon: <Shield size={20} />,
+    id: 'estimateApp',
+    title: 'Estimate',
+    icon: <FileText size={20} />,
     children: [
       {
-        id: 'roles',
-        title: 'Roles',
+        id: 'estimateList',
+        title: 'List',
         icon: <Circle size={12} />,
-        navLink: '/apps/roles'
+        navLink: '/apps/estimate/list'
       },
       {
-        id: 'permissions',
-        title: 'Permissions',
+        id: 'estimateEdit',
+        title: 'Edit',
         icon: <Circle size={12} />,
-        navLink: '/apps/permissions'
+        navLink: '/apps/estimate/edit'
+      },
+      {
+        id: 'estimateAdd',
+        title: 'Add',
+        icon: <Circle size={12} />,
+        navLink: '/apps/estimate/add'
       }
     ]
   },
+  //customer
   {
-    id: 'eCommerce',
-    title: 'eCommerce',
-    icon: <ShoppingCart size={20} />,
-    children: [
-      {
-        id: 'shop',
-        title: 'Shop',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/shop'
-      },
-      {
-        id: 'detail',
-        title: 'Details',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/product-detail'
-      },
-      {
-        id: 'wishList',
-        title: 'Wish List',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/wishlist'
-      },
-      {
-        id: 'checkout',
-        title: 'Checkout',
-        icon: <Circle size={12} />,
-        navLink: '/apps/ecommerce/checkout'
-      }
-    ]
+    id: 'customerApp',
+    title: 'Customers',
+    icon: <Users size={20} />
   },
+  // product
   {
-    id: 'users',
-    title: 'User',
+    id: 'productApp',
+    title: 'Products',
+    icon: <Briefcase size={20} />
+  },
+  //Profile
+  {
+    id: 'profile',
+    title: 'Profile',
     icon: <User size={20} />,
     children: [
       {
-        id: 'list',
-        title: 'List',
+        id: 'details',
+        title: 'Details',
         icon: <Circle size={12} />,
-        navLink: '/apps/user/list'
+        navLink: '/pages/profile'
       },
       {
-        id: 'view',
-        title: 'View',
+        id: 'company',
+        title: 'Company',
         icon: <Circle size={12} />,
         navLink: '/apps/user/view'
       }
