@@ -40,8 +40,8 @@ const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, han
               <option value='50'>50</option>
             </Input>
           </div>
-          <Button tag={Link} to='/apps/invoice/add' color='primary'>
-            Add Record
+          <Button tag={Link} to='/apps/customer/add' color='primary'>
+            Add Customer
           </Button>
         </Col>
         <Col
@@ -56,25 +56,19 @@ const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, han
               type='text'
               value={value}
               onChange={e => handleFilter(e.target.value)}
-              placeholder='Search Invoice'
+              placeholder='Search Customer'
             />
           </div>
-          <Input className='w-auto ' type='select' value={statusValue} onChange={handleStatusValue}>
-            <option value=''>Select Status</option>
-            <option value='sent'>Sent</option>
-            <option value='paid'>Paid</option>
-            <option value='past due'>Past Due</option>
-          </Input>
         </Col>
       </Row>
     </div>
   )
 }
 
-const InvoiceList = () => {
+const CustomerList = () => {
   // ** Store vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.invoice)
+  const store = useSelector(state => state.customer)
 
   // ** States
   const [value, setValue] = useState('')
@@ -92,7 +86,6 @@ const InvoiceList = () => {
         sortColumn,
         page: currentPage,
         perPage: rowsPerPage,
-        status: statusValue
       })
     )
   }, [dispatch, store.data.length])
@@ -123,20 +116,6 @@ const InvoiceList = () => {
       })
     )
     setRowsPerPage(parseInt(e.target.value))
-  }
-
-  const handleStatusValue = e => {
-    setStatusValue(e.target.value)
-    dispatch(
-      getData({
-        sort,
-        q: value,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        status: e.target.value
-      })
-    )
   }
 
   const handlePagination = page => {
@@ -181,7 +160,6 @@ const InvoiceList = () => {
   const dataToRender = () => {
     const filters = {
       q: value,
-      status: statusValue
     }
 
     const isFiltered = Object.keys(filters).some(function (k) {
@@ -228,17 +206,14 @@ const InvoiceList = () => {
             data={dataToRender()}
             sortIcon={<ChevronDown />}
             className='react-dataTable'
-            defaultSortField='invoiceId'
             paginationDefaultPage={currentPage}
             paginationComponent={CustomPagination}
             subHeaderComponent={
               <CustomHeader
                 value={value}
-                statusValue={statusValue}
                 rowsPerPage={rowsPerPage}
                 handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
-                handleStatusValue={handleStatusValue}
               />
             }
           />
@@ -248,4 +223,4 @@ const InvoiceList = () => {
   )
 }
 
-export default InvoiceList
+export default CustomerList

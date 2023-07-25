@@ -9,29 +9,24 @@ export default [
     icon: <FileText size={20} />,
     children: [
       {
+        id: 'invoiceAdd',
+        title: 'Add',
+        icon: <Circle size={12} />,
+        navLink: '/apps/invoice/add'
+      },
+      {
         id: 'invoiceList',
         title: 'List',
         icon: <Circle size={12} />,
         navLink: '/apps/invoice/list'
       },
       {
-        id: 'invoicePreview',
-        title: 'Preview',
+        id: 'invoiceDrafts',
+        title: 'Drafts',
         icon: <Circle size={12} />,
-        navLink: '/apps/invoice/preview'
-      },
-      {
-        id: 'invoiceEdit',
-        title: 'Edit',
-        icon: <Circle size={12} />,
-        navLink: '/apps/invoice/edit'
-      },
-      {
-        id: 'invoiceAdd',
-        title: 'Add',
-        icon: <Circle size={12} />,
-        navLink: '/apps/invoice/add'
+        navLink: '/apps/invoice/drafts'
       }
+      
     ]
   },
   //estimate
@@ -64,13 +59,15 @@ export default [
   {
     id: 'customerApp',
     title: 'Customers',
-    icon: <Users size={20} />
+    icon: <Users size={20} />,
+    navLink: '/apps/customer/list'
   },
   // product
   {
     id: 'productApp',
     title: 'Products',
-    icon: <Briefcase size={20} />
+    icon: <Briefcase size={20} />,
+    navLink: '/apps/product/list'
   },
   //Profile
   {

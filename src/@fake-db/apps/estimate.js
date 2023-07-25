@@ -53,7 +53,44 @@ const data = {
         avatar: '',
         estimateStatus: 'Paid',
         dueDate: '23 Apr 2019'
-      }
+      },
+      {
+        id: 4989,
+        issuedDate: '18 Dec 2019',
+        expiryDate: '20 Dec 2019',
+        client: {
+          address: '1234 Elm Street',
+          company: 'Smith & Co.',
+          companyEmail: 'smith@example.com',
+          country: 'Canada',
+          contact: '(123) 456-7890',
+          name: 'Emily Smith'
+        },
+        service: 'Web Design',
+        total: 2500,
+        avatar: '',
+        estimateStatus: 'Paid',
+        balance: '$0',
+        dueDate: '28 Feb 2020'
+      },
+      {
+        id: 4990,
+        issuedDate: '22 Dec 2019',
+        expiryDate: '25 Dec 2019',
+        client: {
+          address: '4567 Oak Avenue',
+          company: 'Johnson Enterprises',
+          companyEmail: 'info@johnsonent.com',
+          country: 'UK',
+          contact: '(987) 654-3210',
+          name: 'Michael Johnson'
+        },
+        service: 'Mobile App Development',
+        total: 5000,
+        avatar: '',
+        estimateStatus: 'Pending',
+        dueDate: '15 Mar 2020'
+      },
   ]
 }
 
