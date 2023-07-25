@@ -59,12 +59,6 @@ const CustomHeader = ({ handleFilter, value, handleStatusValue, statusValue, han
               placeholder='Search Invoice'
             />
           </div>
-          <Input className='w-auto ' type='select' value={statusValue} onChange={handleStatusValue}>
-            <option value=''>Select Status</option>
-            <option value='sent'>Sent</option>
-            <option value='paid'>Paid</option>
-            <option value='past due'>Past Due</option>
-          </Input>
         </Col>
       </Row>
     </div>
@@ -92,7 +86,7 @@ const InvoiceList = () => {
         sortColumn,
         page: currentPage,
         perPage: rowsPerPage,
-        status: statusValue
+        status: "draft"
       })
     )
   }, [dispatch, store.data.length])
@@ -181,7 +175,7 @@ const InvoiceList = () => {
   const dataToRender = () => {
     const filters = {
       q: value,
-      status: statusValue
+      status: "draft"
     }
 
     const isFiltered = Object.keys(filters).some(function (k) {
@@ -234,11 +228,9 @@ const InvoiceList = () => {
             subHeaderComponent={
               <CustomHeader
                 value={value}
-                statusValue={statusValue}
                 rowsPerPage={rowsPerPage}
                 handleFilter={handleFilter}
                 handlePerPage={handlePerPage}
-                handleStatusValue={handleStatusValue}
               />
             }
           />
