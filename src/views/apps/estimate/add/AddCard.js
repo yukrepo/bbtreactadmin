@@ -2,7 +2,7 @@
 import { Fragment, useState, useEffect } from "react";
 
 // ** Custom Components
-import Sidebar from "@components/sidebar";
+import Sidebar from "@components/sidebar"; 
 import Repeater from "@components/repeater";
 
 // ** Third Party Components
@@ -451,7 +451,7 @@ const AddCard = () => {
       <Sidebar
         size="lg"
         open={open}
-        title="Add Payment"
+        title="Add Customer"
         headerClassName="mb-1"
         contentClassName="p-0"
         toggleSidebar={toggleSidebar}
