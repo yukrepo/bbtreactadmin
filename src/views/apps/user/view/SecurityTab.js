@@ -214,8 +214,12 @@ const SecurityTab = () => {
       </Card>
       <Card>
         <CardBody>
-          <CardTitle className="mb-50">Select Invoice Style</CardTitle>
-          
+          <CardTitle className="mb-50">Select Invoice Style</CardTitle>          
+        </CardBody>
+      </Card>
+      <Card>
+        <CardBody>
+          <CardTitle className="mb-50">Select Currency Symbol</CardTitle>
         </CardBody>
       </Card>
      

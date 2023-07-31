@@ -17,6 +17,7 @@ const InvoiceDrafts = lazy(() => import("../../views/apps/invoice/drafts"));
 
 const EstimateList = lazy(() => import("../../views/apps/estimate/list"));
 const EstimateAdd = lazy(() => import("../../views/apps/estimate/add"));
+const EstimateEdit = lazy(() => import("../../views/apps/estimate/edit"));
 
 const EcommerceShop = lazy(() => import("../../views/apps/ecommerce/shop"));
 const EcommerceDetail = lazy(() => import("../../views/apps/ecommerce/detail"));
@@ -123,6 +124,11 @@ const AppRoutes = [
   {
     element: <EstimateAdd />,
     path: "/apps/estimate/add",
+  },
+  {
+    element: <EstimateEdit />,
+    path: "/apps/estimate/edit/:id"
+
   },
   {
     element: <InvoicePreview />,

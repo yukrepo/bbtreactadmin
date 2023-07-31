@@ -146,7 +146,7 @@ mock.onGet('/apps/estimate/estimates').reply(config => {
 })
 
 // ------------------------------------------------
-// GET: Return Single Invoice
+// GET: Return Single Estimate
 // ------------------------------------------------
 mock.onGet(/\/api\/estimate\/estimates\/\d+/).reply(config => {
   // // Get event id from URL

@@ -34,7 +34,7 @@ const InvoiceEdit = () => {
     });
   }, []);
 
-  return data !== null && data.invoice !== undefined ? (
+  return data !== null && data.estimate !== undefined ? (
     <div className="invoice-edit-wrapper">
       <Row className="invoice-edit">
         <Col xl={9} md={8} sm={12}>

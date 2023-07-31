@@ -42,12 +42,6 @@ export default [
         navLink: '/apps/estimate/list'
       },
       {
-        id: 'estimateEdit',
-        title: 'Edit',
-        icon: <Circle size={12} />,
-        navLink: '/apps/estimate/edit'
-      },
-      {
         id: 'estimateAdd',
         title: 'Add',
         icon: <Circle size={12} />,

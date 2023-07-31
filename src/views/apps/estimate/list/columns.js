@@ -153,8 +153,8 @@ export const columns = [
         <UncontrolledTooltip placement='top' target={`send-tooltip-${row.id}`}>
           Send Mail
         </UncontrolledTooltip>
-        <Link to={`/apps/estimate/preview/${row.id}`} id={`pw-tooltip-${row.id}`}>
-          <Eye size={17} className='mx-1' />
+        <Link to={`/apps/estimate/edit/${row.id}`} id={`pw-tooltip-${row.id}`}>
+          <Edit size={17} className='mx-1' />
         </Link>
         <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
           Preview Estimate
