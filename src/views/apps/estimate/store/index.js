@@ -1,11 +1,12 @@
 // ** Redux Imports
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getEstimates } from '../../../../utility/api'
 
 // ** Axios Imports
 import axios from 'axios'
 
 export const getData = createAsyncThunk('appEstimate/getData', async params => {
-  const response = await axios.get('/apps/estimate/estimates', params)
+  const response = await getEstimates(params)
   return {
     params,
     data: response.data.estimates,

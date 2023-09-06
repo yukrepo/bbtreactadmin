@@ -1,11 +1,12 @@
 // ** Redux Imports
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getInvoices } from '../../../../utility/api'
 
 // ** Axios Imports
 import axios from 'axios'
 
 export const getData = createAsyncThunk('appInvoice/getData', async params => {
-  const response = await axios.get('/apps/invoice/invoices', params)
+  const response = await getInvoices(params)
   return {
     params,
     data: response.data.invoices,

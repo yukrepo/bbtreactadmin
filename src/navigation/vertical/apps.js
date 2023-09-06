@@ -79,7 +79,7 @@ export default [
         id: 'company',
         title: 'Company',
         icon: <Circle size={12} />,
-        navLink: '/apps/user/view'
+        navLink: '/apps/company/details'
       }
     ]
   }

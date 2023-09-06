@@ -19,9 +19,12 @@ const CardCongratulations = () => {
         <img className='congratulations-img-right' src={decorationRight} alt='decor-right' />
         <Avatar icon={<Award size={28} />} className='shadow' color='primary' size='xl' />
         <div className='text-center'>
-          <h1 className='mb-1 text-white'>Congratulations John,</h1>
+          <h1 className='mb-1 text-white'>Congratulations,</h1>
           <CardText className='m-auto w-75'>
-            You have done <strong>57.6%</strong> more sales today. Check your new badge in your profile.
+            Thanks for Choosing E-Invoicing. We are thrilled to have you here.<br></br>
+            To utilize all the amazing features provided by this platform, you will need to setup your company first.
+            
+            Let's get your company setup.
           </CardText>
         </div>
       </CardBody>

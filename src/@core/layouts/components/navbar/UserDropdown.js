@@ -21,6 +21,8 @@ import { UncontrolledDropdown, DropdownMenu, DropdownToggle, DropdownItem } from
 // ** Default Avatar Image
 import defaultAvatar from '@src/assets/images/portrait/small/avatar-s-11.jpg'
 
+import { getStaticFileUrl } from '../../../../utility/api'
+
 const UserDropdown = () => {
   // ** Store Vars
   const dispatch = useDispatch()
@@ -36,7 +38,7 @@ const UserDropdown = () => {
   }, [])
 
   //** Vars
-  const userAvatar = (userData && userData.avatar) || defaultAvatar
+  const userAvatar = userData && userData.avatar ? getStaticFileUrl(userData.avatar) : defaultAvatar;
 
   return (
     <UncontrolledDropdown tag='li' className='dropdown-user nav-item'>

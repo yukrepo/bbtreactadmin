@@ -55,10 +55,10 @@ export const columns = [
   {
     name: '#',
     sortable: true,
-    sortField: 'id',
+    sortField: '_id',
     minWidth: '107px',
     // selector: row => row.id,
-    cell: row => <Link to={`/apps/customer/edit/${row.id}`}>{`#${row.id}`}</Link>
+    cell: row => <Link to={`/apps/customer/edit/${row._id}`}>{`#${row._id}`}</Link>
   },
   {
     sortable: true,
@@ -81,13 +81,13 @@ export const columns = [
     sortable: false,
     minWidth: '350px',
     // selector: row => row.client.name,
-    cell: row => <Link to={`/apps/customer/edit/${row.id}`}>{`${row.address}`}</Link>
+    cell: row => <Link to={`/apps/customer/edit/${row.id}`}>{`${row.invoicingAddress}`}</Link>
   },
   {
     name: 'Payment Terms',
     sortable: false,
     minWidth: '150px',
     // selector: row => row.total,
-    cell: row => <span>{row.paymentTerms}</span>
+    cell: row => <span>{row.paymentTerm}</span>
   }
 ]

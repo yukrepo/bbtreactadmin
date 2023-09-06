@@ -1,42 +1,59 @@
-// ** Redux Imports
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { fetchProducts, addProduct } from '../../../../utility/api'; // Import your API functions
 
-// ** Axios Imports
-import axios from 'axios'
-
-export const getData = createAsyncThunk('appProduct/getData', async params => {
-  const response = await axios.get('/apps/product/products', params)
+export const getData = createAsyncThunk('appProduct/getData', async (params) => {
+  const response = await fetchProducts(params);
   return {
     params,
     data: response.data.products,
     allData: response.data.allData,
-    totalPages: response.data.total
-  }
-})
+    totalPages: response.data.total,
+  };
+});
 
-// export const deleteInvoice = createAsyncThunk('appInvoice/deleteInvoice', async (id, { dispatch, getState }) => {
-//   await axios.delete('/apps/invoice/delete', { id })
-//   await dispatch(getData(getState().invoice.params))
-//   return id
-// })
+export const addNewProduct = createAsyncThunk('appProduct/addNewProduct', async (newProduct) => {
+  const response = await addProduct(newProduct);
+  return response.data; // Assuming your API response contains the newly added product
+});
 
-export const appProductSlice = createSlice({
+export const searchProductData = createAsyncThunk('appProduct/searchProductData', async (searchQuery) => {
+  const queryString = `?query=${encodeURIComponent(searchQuery)}`;
+  const response = await searchProducts(queryString);
+  return {
+    searchResults: response.data.products,
+  };
+});
+
+const initialState = {
+  data: [],
+  total: 1,
+  params: {},
+  allData: [],
+  searchResults: [], // Initialize the searchResults field
+};
+
+const appProductSlice = createSlice({
   name: 'appProduct',
-  initialState: {
-    data: [],
-    total: 1,
-    params: {},
-    allData: []
-  },
+  initialState,
   reducers: {},
-  extraReducers: builder => {
-    builder.addCase(getData.fulfilled, (state, action) => {
-      state.data = action.payload.data
-      state.allData = action.payload.allData
-      state.total = action.payload.totalPages
-      state.params = action.payload.params
-    })
-  }
-})
+  extraReducers: (builder) => {
+    builder
+      .addCase(getData.fulfilled, (state, action) => {
+        state.data = action.payload.data;
+        state.allData = action.payload.allData;
+        state.total = action.payload.totalPages;
+        state.params = action.payload.params;
+      })
+      .addCase(addNewProduct.fulfilled, (state, action) => {
+        // After successfully adding a new product, you can trigger a refresh
+        // by calling the getData action with the existing params
+        getData.fulfilled(state, { payload: { params: state.params } });
+      })
+      .addCase(searchProductData.fulfilled, (state, action) => {
+        state.searchResults = action.payload.data; // Update the searchResults field
+        state.total = 10; // Update the total field for pagination
+      });
+  },
+});
 
-export default appProductSlice.reducer
+export default appProductSlice.reducer;

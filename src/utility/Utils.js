@@ -1,4 +1,6 @@
 import { DefaultRoute } from '../router/routes'
+import toast from 'react-hot-toast'
+import { X } from 'react-feather'
 
 // ** Checks if an object is empty (returns boolean)
 export const isObjEmpty = obj => Object.keys(obj).length === 0
@@ -63,7 +65,7 @@ export const getUserData = () => JSON.parse(localStorage.getItem('userData'))
  */
 export const getHomeRouteForLoggedInUser = userRole => {
   if (userRole === 'admin') return DefaultRoute
-  if (userRole === 'client') return '/access-control'
+  if (userRole === 'client') return DefaultRoute
   return '/login'
 }
 
@@ -79,3 +81,4 @@ export const selectThemeColors = theme => ({
     neutral30: '#ededed' // for input hover border-color
   }
 })
+

@@ -1,26 +1,22 @@
 // ** Redux Imports
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { getCustomers } from '../../../../utility/api'
 
 // ** Axios Imports
 import axios from 'axios'
 
 export const getData = createAsyncThunk('appCustomer/getData', async params => {
-  const response = await axios.get('/apps/customer/customers', params)
+  const response = await getCustomers(params)
   return {
     params,
     data: response.data.customers,
     allData: response.data.allData,
-    totalPages: response.data.total
+    totalPages: response.data.totalPages
   }
 })
 
-// export const deleteInvoice = createAsyncThunk('appInvoice/deleteInvoice', async (id, { dispatch, getState }) => {
-//   await axios.delete('/apps/invoice/delete', { id })
-//   await dispatch(getData(getState().invoice.params))
-//   return id
-// })
 
-export const appInvoiceSlice = createSlice({
+export const appCustomerSlice = createSlice({
   name: 'appCustomer',
   initialState: {
     data: [],
@@ -39,4 +35,4 @@ export const appInvoiceSlice = createSlice({
   }
 })
 
-export default appInvoiceSlice.reducer
+export default appCustomerSlice.reducer

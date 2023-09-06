@@ -1,5 +1,5 @@
 // ** React Imports
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 
 // ** Icons Imports
 import { List } from "react-feather";
@@ -27,15 +27,25 @@ import Sales from "@src/views/ui-elements/cards/analytics/Sales2";
 import InvoicesInfo from "../../ui-elements/cards/dashboard/InvoicesInfo";
 import InvoicesPieChart from "../../ui-elements/cards/analytics/InvoiceReport";
 
+//create company if the company is not created
+import CreateCompany from "./createCompany";
+
 import AvgSessions from "@src/views/ui-elements/cards/analytics/AvgSessions";
 import CardAppDesign from "@src/views/ui-elements/cards/advance/CardAppDesign";
 import SupportTracker from "@src/views/ui-elements/cards/analytics/SupportTracker";
 import OrdersReceived from "@src/views/ui-elements/cards/statistics/OrdersReceived";
 import SubscribersGained from "@src/views/ui-elements/cards/statistics/SubscribersGained";
 import CardCongratulations from "@src/views/ui-elements/cards/advance/CardCongratulations";
+import CardNextSteps from "../../ui-elements/cards/advance/CardNestSteps";
+
+// Spinner
+
+import SpinnerGrowing from "../../components/spinners/SpinnerGrowing";
 
 // ** Images
 import jsonImg from "@src/assets/images/icons/json.png";
+
+import api, { fetchCompany } from "@src/utility/api.js";
 
 // ** Avatar Imports
 import avatar6 from "@src/assets/images/portrait/small/avatar-s-6.jpg";
@@ -50,6 +60,31 @@ import "@styles/react/libs/charts/apex-charts.scss";
 const AnalyticsDashboard = () => {
   // ** Context
   const { colors } = useContext(ThemeColors);
+
+  const [companyStatus, setCompanyStatus] = useState(null);
+  const [refreshDashboard, setRefreshDashboard] = useState(false);
+  const [loader, setLoader] = useState(false);
+  useEffect(() => {
+    async function fetchData() {
+      setLoader(true);
+      await fetchCompany()
+        .then((response) => {
+          if (response.status === 200) {
+            setCompanyStatus(true);
+          } else if (response.status === 404) {
+            setCompanyStatus(false);
+          } else {
+            throw new Error("API returned unexpected status");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching API:", error);
+          setCompanyStatus(false);
+        });
+      setLoader(false);
+    }
+    fetchData();
+  }, [refreshDashboard]);
 
   // ** Vars
   const avatarGroupArr = [
@@ -137,30 +172,44 @@ const AnalyticsDashboard = () => {
 
   return (
     <div id="dashboard-analytics">
-      <Row className="match-height">
-        <Col lg="8" md="8" sm="12">
-          <InvoicesInfo></InvoicesInfo>
-        </Col>
+      {loader ? (
+        <SpinnerGrowing></SpinnerGrowing>
+      ) : companyStatus === true ? (
+        <div id="dashboard-analytics">
+          <Row className="match-height">
+            <Col lg="6" md="6" sm="12">
+              <CardNextSteps></CardNextSteps>
+            </Col>
+            <Col lg="6" md="6" sm="12">
+              <Sales></Sales>
+            </Col>
+          </Row>
+          <Row className="match-height">
+            <Col lg="8" md="8" sm="12">
+              <InvoicesInfo></InvoicesInfo>
+            </Col>
 
-        <Col lg="4" md="4" sm="12">
-          <InvoicesPieChart></InvoicesPieChart>
-        </Col>
-      </Row>
-      <Row className="match-height">
-        <Col lg="6" md="6" sm="12">
-          <Sales></Sales>
-        </Col>
+            <Col lg="4" md="4" sm="12">
+              <InvoicesPieChart></InvoicesPieChart>
+            </Col>
+          </Row>
 
-        <Col lg="6" md="6" sm="12">
-          <CardCongratulations></CardCongratulations>
-        </Col>
-      </Row>
-
-      <Row className="match-height">
-        <Col xs="12">
-          <InvoiceList />
-        </Col>
-      </Row>
+          <Row className="match-height">
+            <Col xs="12">
+              <InvoiceList />
+            </Col>
+          </Row>
+        </div>
+      ) : (
+        <Row className="match-height">
+          <Col lg="4" md="4" sm="12">
+            <CardCongratulations />
+          </Col>
+          <Col lg="8" md="8" sm="12">
+            <CreateCompany />
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

@@ -8,6 +8,9 @@ const Email = lazy(() => import("../../views/apps/email"));
 const Kanban = lazy(() => import("../../views/apps/kanban"));
 const Calendar = lazy(() => import("../../views/apps/calendar"));
 
+const CompanySettings = lazy(() => import("../../views/apps/company/settings"));
+const CompanyDetails = lazy(() => import("../../views/apps/company/details"));
+
 const InvoiceAdd = lazy(() => import("../../views/apps/invoice/add"));
 const InvoiceList = lazy(() => import("../../views/apps/invoice/list"));
 const InvoiceEdit = lazy(() => import("../../views/apps/invoice/edit"));
@@ -111,6 +114,14 @@ const AppRoutes = [
       appLayout: true,
       className: "kanban-application",
     },
+  },
+  {
+    element: <CompanySettings />,
+    path: "/apps/company/settings",
+  },
+  {
+    element: <CompanyDetails />,
+    path: "/apps/company/details",
   },
   {
     element: <InvoiceList />,

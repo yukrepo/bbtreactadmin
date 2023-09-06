@@ -39,11 +39,8 @@ import {
 // ** Vars
 const estimateStatusObj = {
   Sent: { color: 'light-secondary', icon: Send },
-  Paid: { color: 'light-success', icon: CheckCircle },
   Draft: { color: 'light-primary', icon: Save },
-  Downloaded: { color: 'light-info', icon: ArrowDownCircle },
-  'Past Due': { color: 'light-danger', icon: Info },
-  'Partial Payment': { color: 'light-warning', icon: PieChart }
+   
 }
 
 // ** renders client column
@@ -64,53 +61,40 @@ export const columns = [
   {
     name: '#',
     sortable: true,
-    sortField: 'id',
+    sortField: '_id',
     minWidth: '107px',
     // selector: row => row.id,
-    cell: row => <Link to={`/apps/estimate/preview/${row.id}`}>{`#${row.id}`}</Link>
+    cell: row => <Link to={`/apps/estimate/preview/${row.id}`}>{`#${row.refNo}`}</Link>
   },
-  {
-    sortable: true,
-    minWidth: '102px',
-    sortField: 'estimateStatus',
-    name: <TrendingUp size={14} />,
-    // selector: row => row.estimateStatus,
-    cell: row => {
-      const color = estimateStatusObj[row.estimateStatus] ? estimateStatusObj[row.estimateStatus].color : 'primary',
-        Icon = estimateStatusObj[row.estimateStatus] ? estimateStatusObj[row.estimateStatus].icon : Edit
-      return (
-        <Fragment>
-          <Avatar color={color} icon={<Icon size={14} />} id={`av-tooltip-${row.id}`} />
-          <UncontrolledTooltip placement='top' target={`av-tooltip-${row.id}`}>
-            <span className='fw-bold'>{row.estimateStatus}</span>
-            <br />
-            <span className='fw-bold'>Balance:</span> {row.balance}
-            <br />
-            <span className='fw-bold'>Due Date:</span> {row.dueDate}
-          </UncontrolledTooltip>
-        </Fragment>
-      )
-    }
-  },
+  // {
+  //   sortable: true,
+  //   minWidth: '102px',
+  //   sortField: 'estimateStatus',
+  //   name: <TrendingUp size={14} />,
+  //   // selector: row => row.estimateStatus,
+  //   cell: row => {
+  //     const color = estimateStatusObj[row.estimateStatus] ? estimateStatusObj[row.estimateStatus].color : 'primary',
+  //       Icon = estimateStatusObj[row.estimateStatus] ? estimateStatusObj[row.estimateStatus].icon : Edit
+  //     return (
+  //       <Fragment>
+  //         <Avatar color={color} icon={<Icon size={14} />} id={`av-tooltip-${row.id}`} />
+  //         <UncontrolledTooltip placement='top' target={`av-tooltip-${row.id}`}>
+  //           <span className='fw-bold'>{row.estimateStatus}</span>
+  //           <br />
+  //           <span className='fw-bold'>Balance:</span> {row.balance}
+  //           <br />
+  //           <span className='fw-bold'>Due Date:</span> {row.dueDate}
+  //         </UncontrolledTooltip>
+  //       </Fragment>
+  //     )
+  //   }
+  // },
   {
     name: 'Client',
-    sortable: true,
+    sortable: false,
     minWidth: '350px',
-    sortField: 'client.name',
     // selector: row => row.client.name,
-    cell: row => {
-      const name = row.client ? row.client.name : 'John Doe',
-        email = row.client ? row.client.companyEmail : 'johnDoe@email.com'
-      return (
-        <div className='d-flex justify-content-left align-items-center'>
-          {renderClient(row)}
-          <div className='d-flex flex-column'>
-            <h6 className='user-name text-truncate mb-0'>{name}</h6>
-            <small className='text-truncate text-muted mb-0'>{email}</small>
-          </div>
-        </div>
-      )
-    }
+    cell: row => <span>{row.customer || 0}</span>
   },
   {
     name: 'Total',
@@ -118,32 +102,40 @@ export const columns = [
     minWidth: '150px',
     sortField: 'total',
     // selector: row => row.total,
-    cell: row => <span>${row.total || 0}</span>
+    cell: row => <span>₹ {row.totalAmount || 0}</span>
   },
   {
     sortable: true,
     minWidth: '200px',
     name: 'Issued Date',
     sortField: 'dueDate',
-    cell: row => row.dueDate
+    cell: row => row.date
     // selector: row => row.dueDate
   },
   {
     sortable: true,
-    name: 'Balance',
-    minWidth: '164px',
-    sortField: 'balance',
-    // selector: row => row.balance,
-    cell: row => {
-      return row.balance !== 0 ? (
-        <span>{row.balance}</span>
-      ) : (
-        <Badge color='light-success' pill>
-          Paid
-        </Badge>
-      )
-    }
+    minWidth: '200px',
+    name: 'Expiry Date',
+    sortField: 'dueDate',
+    cell: row => row.expiryDate
+    // selector: row => row.dueDate
   },
+  // {
+  //   sortable: true,
+  //   name: 'Balance',
+  //   minWidth: '164px',
+  //   sortField: 'balance',
+  //   // selector: row => row.balance,
+  //   cell: row => {
+  //     return row.balance !== 0 ? (
+  //       <span>{row.balance}</span>
+  //     ) : (
+  //       <Badge color='light-success' pill>
+  //         Paid
+  //       </Badge>
+  //     )
+  //   }
+  // },
   {
     name: 'Action',
     minWidth: '110px',
