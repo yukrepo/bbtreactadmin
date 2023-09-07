@@ -1,15 +1,16 @@
 // ** React Imports
 import { Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import toast from "react-hot-toast";
 
 // ** Table Columns
 import { columns } from './columns'
-import Sidebar from "@components/sidebar"; 
+import Sidebar from "@components/sidebar";
 import { selectThemeColors } from "@utils";
 
 // ** Third Party Components
 import ReactPaginate from 'react-paginate'
-import { ChevronDown } from 'react-feather'
+import { ChevronDown, X } from 'react-feather'
 import DataTable from 'react-data-table-component'
 
 import Select, { components } from "react-select";
@@ -20,25 +21,18 @@ import { Button, Input, Row, Col, Card, Form, Label } from 'reactstrap'
 // ** Store & Actions
 import { getData } from '../store'
 import { useDispatch, useSelector } from 'react-redux'
+import { addCustomer, fetchPaymentTerms } from '../../../../utility/api';
 
 // ** Styles
 import '@styles/react/apps/app-invoice.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 
-
-const countryOptions = [
-  { value: "australia", label: "Australia" },
-  { value: "canada", label: "Canada" },
-  { value: "russia", label: "Russia" },
-  { value: "saudi-arabia", label: "Saudi Arabia" },
-  { value: "singapore", label: "Singapore" },
-  { value: "sweden", label: "Sweden" },
-  { value: "switzerland", label: "Switzerland" },
-  { value: "united-kingdom", label: "United Kingdom" },
-  { value: "united-arab-emirates", label: "United Arab Emirates" },
-  { value: "united-states-of-america", label: "United States of America" },
-];
+const payments = await fetchPaymentTerms();
+const paymentTerms = payments.data.map(item => ({
+  value: item._id,
+  label: "Name: " + item.name + ", Days: " + item.days,
+}));
 
 const CustomerList = () => {
   // ** Store vars
@@ -77,7 +71,7 @@ const CustomerList = () => {
                 <option value='50'>50</option>
               </Input>
             </div>
-            <Button  onClick={toggleSidebar} color='primary'>
+            <Button onClick={toggleSidebar} color='primary'>
               Add Customer
             </Button>
           </Col>
@@ -101,6 +95,24 @@ const CustomerList = () => {
       </div>
     )
   }
+
+  const ToastContent = ({ t, content }) => {
+    return (
+      <div className="d-flex">
+        <div className="d-flex flex-column">
+          <div className="d-flex justify-content-between">
+            <X
+              size={15}
+              color="#FF0000"
+              className="cursor-pointer"
+              onClick={() => toast.dismiss(t.id)}
+            />
+          </div>
+          <span className=" px-2 py-2">{content}</span>
+        </div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     dispatch(
@@ -214,6 +226,42 @@ const CustomerList = () => {
     )
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Get the values from the form inputs
+    const name = event.target.querySelector("#name").value;
+    const email = event.target.querySelector("#customer-email").value;
+    const invoicingAddress = parseFloat(event.target.querySelector("#customer-address").value);
+    const paymentTerm = event.target.querySelector("#payment-terms").value;
+
+    // Call the addProduct API function to add the new product
+    try {
+      const newCustomer = {
+        name,
+        email,
+        invoicingAddress,
+        paymentTerm
+      };
+
+      const response = await addCustomer(newCustomer);
+      if (response.error) {
+        throw new error(response);
+      }
+      toast((t) => (
+        <ToastContent t={t} content="Added Customer Successfully." />
+      ));
+      toggleSidebar();
+    } catch (error) {
+
+      toast(t => (
+        <ToastContent t={t} content="Failed to Add Customer." />
+      ))
+      console.log(error)
+      toggleSidebar();
+    }
+  };
+
   return (
     <div className='invoice-list-wrapper'>
       <Card>
@@ -251,12 +299,12 @@ const CustomerList = () => {
         contentClassName="p-0"
         toggleSidebar={toggleSidebar}
       >
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <div className="mb-2">
-            <Label for="customer-name" className="form-label">
+            <Label for="name" className="form-label">
               Customer Name
             </Label>
-            <Input id="customer-name" placeholder="John Doe" />
+            <Input id="name" placeholder="John Doe" />
           </div>
           <div className="mb-2">
             <Label for="customer-email" className="form-label">
@@ -281,34 +329,22 @@ const CustomerList = () => {
             />
           </div>
           <div className="mb-2">
-            <Label for="country" className="form-label">
-              Country
+            <Label for="payment-terms" className="form-label">
+              Payment Terms
             </Label>
             <Select
               theme={selectThemeColors}
               className="react-select"
               classNamePrefix="select"
-              options={countryOptions}
+              id="payment-terms"
+              options={paymentTerms}
               isClearable={false}
             />
           </div>
-          <div className="mb-2">
-            <Label for="customer-contact" className="form-label">
-              Contact
-            </Label>
-            <Input
-              type="number"
-              id="customer-contact"
-              placeholder="763-242-9206"
-            />
-          </div>
+
           <div className="d-flex flex-wrap my-2">
-            <Button
-              className="me-1"
-              color="primary"
-              onClick={() => setOpen(false)}
-            >
-              Add
+            <Button className="me-1" color="primary" type="submit">
+              Add Customer
             </Button>
             <Button color="secondary" onClick={() => setOpen(false)} outline>
               Cancel

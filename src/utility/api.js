@@ -86,8 +86,11 @@ export const editProduct = (id,formData) => {
 
 // Customer Routes 
 
-export const getCustomers = (params) => {
+export const getCustomers = (params) => { 
   return instance.get("/customer", {params})
+}
+export const addCustomer = (formData) => {
+  return instance.post("/customer", formData);
 }
 
 
