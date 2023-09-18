@@ -27,13 +27,24 @@ import { addCustomer, fetchPaymentTerms } from '../../../../utility/api';
 import '@styles/react/apps/app-invoice.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
+var paymentTerms = []
+async function fetchAndProcessPaymentTerms() {
+  try {
+    const payments = await fetchPaymentTerms();
+    paymentTerms = payments.data.map(item => ({
+      value: item._id,
+      label: "Name: " + item.name + ", Days: " + item.days,
+    }));
 
-const payments = await fetchPaymentTerms();
-const paymentTerms = payments.data.map(item => ({
-  value: item._id,
-  label: "Name: " + item.name + ", Days: " + item.days,
-}));
 
+    return paymentTerms;
+  } catch (error) {
+    console.error("Error fetching payment terms:", error);
+    throw error;
+  }
+}
+
+fetchAndProcessPaymentTerms()
 const CustomerList = () => {
   // ** Store vars
   const dispatch = useDispatch()
@@ -232,16 +243,20 @@ const CustomerList = () => {
     // Get the values from the form inputs
     const name = event.target.querySelector("#name").value;
     const email = event.target.querySelector("#customer-email").value;
-    const invoicingAddress = parseFloat(event.target.querySelector("#customer-address").value);
+    const invoicingAddress = event.target.querySelector("#invoicingAddress").value;
     const paymentTerm = event.target.querySelector("#payment-terms").value;
+    const gstNo = event.target.querySelector('#gstNo').value || "XXX";
 
     // Call the addProduct API function to add the new product
+
+    console.log(invoicingAddress);
     try {
       const newCustomer = {
         name,
         email,
         invoicingAddress,
-        paymentTerm
+        paymentTerm,
+        gstNo
       };
 
       const response = await addCustomer(newCustomer);
@@ -317,16 +332,16 @@ const CustomerList = () => {
             />
           </div>
           <div className="mb-2">
-            <Label for="customer-address" className="form-label">
+            <Label for="gstNo" className="form-label">
+              GST
+            </Label>
+            <Input id="gstNo" placeholder="XXX" />
+          </div>
+          <div className="mb-2">
+            <Label for="invoicingAddress" className="form-label">
               Customer Address
             </Label>
-            <Input
-              type="textarea"
-              cols="2"
-              rows="2"
-              id="customer-address"
-              placeholder="1307 Lady Bug Drive New York"
-            />
+            <Input type="text" id="invoicingAddress" placeholder="1307 Lady Bug Drive New York"/>
           </div>
           <div className="mb-2">
             <Label for="payment-terms" className="form-label">

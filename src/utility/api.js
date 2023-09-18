@@ -83,6 +83,9 @@ export const searchProducts = (searchQuery) => {
 export const editProduct = (id,formData) => {
   return instance.post(`/product/edit/${id}`, formData);
 }
+export const getAllProducts = () => {
+  return instance.get("/allProducts");
+}
 
 // Customer Routes 
 
@@ -92,13 +95,19 @@ export const getCustomers = (params) => {
 export const addCustomer = (formData) => {
   return instance.post("/customer", formData);
 }
-
+export const getAllCustomers = () => { 
+  return instance.get("/customer/all")
+}
 
 
 // Estimates Routes 
 
 export const getEstimates = (params) => {
   return instance.get("/estimate", {params})
+}
+
+export const getEstimateRef = () => {
+  return instance.get("/getNextEstimateRefNo");
 }
 
 
