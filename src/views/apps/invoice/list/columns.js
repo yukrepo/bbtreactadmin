@@ -67,7 +67,7 @@ export const columns = [
     sortField: '_id',
     minWidth: '107px',
     // selector: row => row.id,
-    cell: row => <Link to={`/apps/estimate/preview/${row.id}`}>{`#${row.refNo}`}</Link>
+    cell: row => <Link to={`/apps/invoice/preview/${row._id}`}>{`#${row.refNo}`}</Link>
   },
   // {
   //   sortable: true,
@@ -158,10 +158,7 @@ export const columns = [
         </UncontrolledTooltip>
         <Link to={`/apps/estimate/edit/${row.id}`} id={`pw-tooltip-${row.id}`}>
           <Edit size={17} className='mx-1' />
-        </Link>
-        <UncontrolledTooltip placement='top' target={`pw-tooltip-${row.id}`}>
-          Preview Estimate
-        </UncontrolledTooltip>
+        </Link>        
         <UncontrolledDropdown>
           <DropdownToggle tag='span'>
             <MoreVertical size={17} className='cursor-pointer' />
@@ -171,10 +168,7 @@ export const columns = [
               <Download size={14} className='me-50' />
               <span className='align-middle'>Download</span>
             </DropdownItem>
-            <DropdownItem tag={Link} to={`/apps/estimate/edit/${row.id}`} className='w-100'>
-              <Edit size={14} className='me-50' />
-              <span className='align-middle'>Edit</span>
-            </DropdownItem>
+            
             <DropdownItem
               tag='a'
               href='/'
@@ -186,10 +180,6 @@ export const columns = [
             >
               <Trash size={14} className='me-50' />
               <span className='align-middle'>Delete</span>
-            </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Copy size={14} className='me-50' />
-              <span className='align-middle'>Duplicate</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>

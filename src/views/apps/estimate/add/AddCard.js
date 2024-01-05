@@ -41,6 +41,7 @@ const AddCard = () => {
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
+  const [customer, setCustomer] = useState(null)
   const [open, setOpen] = useState(false)
   const [clients, setClients] = useState(null)
   const [selected, setSelected] = useState(null)
@@ -50,6 +51,7 @@ const AddCard = () => {
   const [dueDatepicker, setDueDatePicker] = useState(new Date())
   const [products, setProducts] = useState(null)
   const [total, setTotal] = useState(0);
+  const [note, setNote] = useState("It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You!");
   const [itemDetails, setItemDetails] = useState([
     {
       selectedProduct: "",
@@ -63,7 +65,9 @@ const AddCard = () => {
       type: "button",
       color: "flat-success"
     }
-  ])
+  ]);
+
+  
 
   useEffect(() => {
 
@@ -76,7 +80,7 @@ const AddCard = () => {
 
       const arr = options;
       response.data.map((item) =>
-        arr.push({ value: item.name, label: item.name })
+        arr.push({ value: item.name, label: item.name, _id: item._id })
       );
       setOptions([...arr]);
       setClients(response.data);
@@ -93,38 +97,53 @@ const AddCard = () => {
       });
   }, []);
 
+  const changeNote = (note) => {
+    setNote(note)
+  }
+
   //gather data for save 
 
   const gatherDataForSave = () => {
+    const cleanedItemDetails = itemDetails.map(({ selectedProduct, quantity, discountPercentage,price }) => ({
+      product: selectedProduct,
+      quantity,
+      discount: discountPercentage,
+      rate: price
+    }));
     const dataToSave = {
       refNo: invoiceNumber,
-      customer: value,
+      customer: customer,
       date: picker,
       expiryDate: dueDatepicker,
-      items: itemDetails
+      items: cleanedItemDetails,
+      note
     };
 
     return dataToSave;
   };
 
-
-
   // ** Deletes form
-  const deleteForm = (e) => {
-    e.preventDefault();
-    e.target.closest(".repeater-wrapper").remove();
+  const deleteForm = (itemIndex) => {
+    const updatedItemDetails = [...itemDetails];
+    updatedItemDetails.splice(itemIndex, 1);
+    setItemDetails(updatedItemDetails);
+    const newTotal = updatedItemDetails.reduce((acc, item) => acc + item.price, 0);
+    setTotal(newTotal);
+
+    // Remove the corresponding repeater element
+    setCount(count - 1); // Decrement the count to remove the last element
   };
 
   const calculateCost = (selectedProduct) => {
-    const product = products.find((p) => p.name === selectedProduct);
+    const product = products.find((p) => p._id === selectedProduct);
     return product ? product.price : 0;
   };
   const calculateRate = (selectedProduct) => {
-    const product = products.find((p) => p.name === selectedProduct);
+    const product = products.find((p) => p._id === selectedProduct);
     return product ? product.rate : 0;
   }
   const calculateTax = (selectedProduct) => {
-    const product = products.find((p) => p.name === selectedProduct);
+    const product = products.find((p) => p._id === selectedProduct);
     return product ? product.tax : 0;
   }
 
@@ -249,13 +268,14 @@ const AddCard = () => {
 
   // ** Invoice To OnChange
   const handleInvoiceToChange = (data) => {
+    const selectedCustomer = clients.find((client) => client.name === data.value);
+
+    
     setValue(data);
-    setSelected(clients.filter((i) => i.name === data.value)[0]);
+    setCustomer(selectedCustomer ? selectedCustomer._id : null);
   };
 
 
-  const note =
-    "It was a pleasure working with you and your team. We hope you will keep us in mind for future freelance projects. Thank You!";
 
   return (
     <Row className='invoice-add'>
@@ -376,7 +396,7 @@ const AddCard = () => {
                                 <option>Select Product</option>
                                 {products !== null &&
                                   products.map((product) => (
-                                    <option key={product._id} value={product.name}>
+                                    <option key={product._id} value={product._id}>
                                       {product.name}
                                     </option>
                                   ))}
@@ -492,7 +512,7 @@ const AddCard = () => {
                     <Label for="note" className="form-label fw-bold">
                       Note:
                     </Label>
-                    <Input type="textarea" rows="2" id="note" defaultValue={note} />
+                    <Input type="textarea" rows="2" id="note" value={note} onChange={(e) => changeNote(e.target.value)} />
                   </div>
                 </Col>
               </Row>

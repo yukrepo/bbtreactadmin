@@ -58,7 +58,7 @@ export const columns = [
     sortField: 'id',
     minWidth: '107px',
     // selector: row => row.id,
-    cell: row => <Link to={`/apps/product/edit/${row.id}`}>{`#${row.id}`}</Link>
+    cell: row => <span>{row.id}</span>
   },
   {
     sortable: true,
@@ -66,14 +66,14 @@ export const columns = [
     sortField: 'name',
     name: 'Name',
     // selector: row => row.invoiceStatus,
-    cell: row => <Link to={`/apps/product/edit/${row.id}`}>{`${row.name}`}</Link>
+    cell: row => <span>{row.name}</span>
   },
   {
     sortable: false,
     minWidth: '350px',
     name: 'Description',
     // selector: row => row.invoiceStatus,
-    cell: row => <Link to={`/apps/product/edit/${row.id}`}>{`${row.description}`}</Link>
+    cell: row => <span>{row.description}</span>
   },
   {
     name: 'Price',
@@ -81,7 +81,7 @@ export const columns = [
     sortField: 'price',
     minWidth: '102px',
     // selector: row => row.client.name,
-    cell: row => <Link to={`/apps/product/edit/${row.id}`}>₹ {`${row.price}`}</Link>
+    cell: row => <span>₹ {row.price}</span>
   },
   {
     name: 'Tax Code',

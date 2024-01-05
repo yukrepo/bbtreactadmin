@@ -62,16 +62,6 @@ const CreateCompany = () => {
               />
             </FormGroup>
             <FormGroup>
-              <Label for="email">Email</Label>
-              <Input
-                type="email"
-                id="email"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
               <Label for="registrationNumber">Registration Number</Label>
               <Input
                 type="text"
@@ -83,16 +73,7 @@ const CreateCompany = () => {
                 required
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="gstNo">GST Number</Label>
-              <Input
-                type="text"
-                id="gstNo"
-                value={formData.gstNo}
-                onChange={(e) => setFormData({ ...formData, gstNo: e.target.value })}
-                required
-              />
-            </FormGroup>
+
             <FormGroup>
               <Label for="defaultGst">Default GST</Label>
               <Input
@@ -105,8 +86,69 @@ const CreateCompany = () => {
                 required
               />
             </FormGroup>
+            <FormGroup>
+            <Label for="addLine2">Address Line 2</Label>
+            <Input
+              type="text"
+              id="addLine2"
+              value={formData.addLine2}
+              onChange={(e) => setFormData({ ...formData, addLine2: e.target.value })}
+            />
+          </FormGroup>
+            
+            <FormGroup>
+              <Label for="postcode">Postcode</Label>
+              <Input
+                type="text"
+                id="postcode"
+                value={formData.postcode}
+                onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
+              />
+            </FormGroup>
+            
           </Col>
           <Col md="6">
+
+            <FormGroup>
+              <Label for="email">Email</Label>
+              <Input
+                type="email"
+                id="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="gstNo">GST Number</Label>
+              <Input
+                type="text"
+                id="gstNo"
+                value={formData.gstNo}
+                onChange={(e) => setFormData({ ...formData, gstNo: e.target.value })}
+                required
+              />
+            </FormGroup> 
+            <FormGroup>
+              <Label for="addLine1">Address Line 1</Label>
+              <Input
+                type="text"
+                id="addLine1"
+                value={formData.addLine1}
+                onChange={(e) => setFormData({ ...formData, addLine1: e.target.value })}
+                required
+              />
+            </FormGroup>      
+            
+            <FormGroup>
+              <Label for="city">City</Label>
+              <Input
+                type="text"
+                id="city"
+                value={formData.city}
+                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+              />
+            </FormGroup>
             <FormGroup>
               <Label for="country">Country</Label>
               <Input
@@ -117,43 +159,6 @@ const CreateCompany = () => {
                 required
               />
             </FormGroup>
-            <FormGroup>
-              <Label for="addLine1">Address Line 1</Label>
-              <Input
-                type="text"
-                id="addLine1"
-                value={formData.addLine1}
-                onChange={(e) => setFormData({ ...formData, addLine1: e.target.value })}
-                required
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="addLine2">Address Line 2</Label>
-              <Input
-                type="text"
-                id="addLine2"
-                value={formData.addLine2}
-                onChange={(e) => setFormData({ ...formData, addLine2: e.target.value })}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="postcode">Postcode</Label>
-              <Input
-                type="text"
-                id="postcode"
-                value={formData.postcode}
-                onChange={(e) => setFormData({ ...formData, postcode: e.target.value })}
-              />
-            </FormGroup>
-            <FormGroup>
-              <Label for="city">City</Label>
-              <Input
-                type="text"
-                id="city"
-                value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              />
-            </FormGroup>            
           </Col>
         </Row>
         <FormGroup row>
@@ -164,7 +169,7 @@ const CreateCompany = () => {
           </Col>
         </FormGroup>
       </Form>
-      
+
       {submissionStatus === "error" && (
         <p className="text-danger">Failed to create company.</p>
       )}

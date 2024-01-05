@@ -1,22 +1,28 @@
 import { useEffect, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { ChevronDown, X } from "react-feather";
+import { useParams, Link, useNavigate } from 'react-router-dom'
 
 import { Row, Col, Card, CardBody, Button } from 'reactstrap'
 import { Fragment } from 'react'
-import { getInvoiceById, getStaticFileUrl } from '../../../../utility/api';
+import { getEstimateById, getStaticFileUrl, estimateToInvoice } from '../../../../utility/api';
 import { Table } from 'reactstrap';
+import toast from 'react-hot-toast';
 
 
 
 const EstimatePreview = () => {
     const { id } = useParams();
+
     const [estimate, setEstimate] = useState({})
     const [customer, setCustomer] = useState({})
     const [items, setItems] = useState()
     const [pdf, setPdf] = useState()
+
+    const navigate = useNavigate()
     useEffect(() => {
 
-        getInvoiceById(id).then((response) => {            
+        getEstimateById(id).then((response) => {            
+            // console.log(response.data.customer)
             setEstimate(response.data.task)
             setCustomer(response.data.customer)
             const apdf = getStaticFileUrl(response.data.task.pdf)
@@ -30,6 +36,43 @@ const EstimatePreview = () => {
             window.open(pdf, '_blank');
         }
     };
+    const handleConvertToInvoice = async () => {
+        const payload = {
+            estimateId: id
+        };
+        const response = await estimateToInvoice(payload);
+        if (response.status === 201) {
+            toast((t) => (
+                <ToastContent t={t} content="Estimate Converrted to Invoice." />
+                
+              ));
+              navigate('/apps/invoice/list');
+        } else {
+            toast((t) => (
+                <ToastContent t={t} content="Error Occured. Try Again." />
+              ));
+        }
+    };
+
+    const ToastContent = ({ t, content }) => {
+        return (
+          <div className="d-flex">
+            <div className="d-flex flex-column">
+              <div className="d-flex justify-content-between">
+                <X
+                  size={15}
+                  color="#FF0000"
+                  className="cursor-pointer"
+                  onClick={() => toast.dismiss(t.id)}
+                />
+              </div>
+              <span className=" px-2 py-2">{content}</span>
+            </div>
+          </div>
+        );
+      };
+
+    
 
 
     return (
@@ -118,9 +161,12 @@ const EstimatePreview = () => {
             </Col>
             <Col xl={3} md={4} sm={12}>
                 <Card className='invoice-action-wrapper'>
-                    <CardBody>
+                    <CardBody>                                
                         <Button color='primary' block className='mb-75' disabled>
                             Send
+                        </Button>
+                        <Button color='primary' block className='mb-75' onClick={handleConvertToInvoice}>
+                            Convert To Invoice
                         </Button>
                     </CardBody>
                 </Card>

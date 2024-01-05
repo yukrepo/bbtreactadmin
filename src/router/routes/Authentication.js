@@ -138,10 +138,12 @@ const AuthenticationRoutes = [
     }
   },
   {
-    path: '/pages/two-steps-cover',
+    path: '/two-step',
     element: <TwoStepsCover />,
     meta: {
-      layout: 'blank'
+      layout: 'blank',
+      publicRoute: true,
+      restricted: true
     }
   }
 ]

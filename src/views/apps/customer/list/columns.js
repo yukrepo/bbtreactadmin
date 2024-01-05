@@ -58,7 +58,7 @@ export const columns = [
     sortField: '_id',
     minWidth: '107px',
     // selector: row => row.id,
-    cell: row => <Link to={`/apps/customer/edit/${row._id}`}>{`#${row._id}`}</Link>
+    cell: row => <span>{row._id}</span>
   },
   {
     sortable: true,
@@ -66,7 +66,7 @@ export const columns = [
     sortField: 'name',
     name: 'Name',
     // selector: row => row.invoiceStatus,
-    cell: row => <Link to={`/apps/customer/edit/${row.id}`}>{`${row.name}`}</Link>
+    cell: row => <span>{row.name}</span>
   },
   {
     sortable: true,
@@ -74,14 +74,14 @@ export const columns = [
     sortField: 'email',
     name: 'Email',
     // selector: row => row.invoiceStatus,
-    cell: row => <Link to={`/apps/customer/edit/${row.id}`}>{`${row.email}`}</Link>
+    cell: row => <span>{row.email}</span>
   },
   {
     name: 'Address',
     sortable: false,
     minWidth: '350px',
     // selector: row => row.client.name,
-    cell: row => <Link to={`/apps/customer/edit/${row.id}`}>{`${row.invoicingAddress}`}</Link>
+    cell: row => <span>{row.invoicingAddress}</span>
   },
   {
     name: 'Payment Terms',

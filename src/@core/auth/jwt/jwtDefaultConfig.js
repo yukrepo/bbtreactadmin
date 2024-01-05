@@ -1,9 +1,15 @@
 // ** Auth Endpoints
 export default {
+  
   loginEndpoint: 'http://localhost:5000/users/login',
   registerEndpoint: 'http://localhost:5000/users',
   refreshEndpoint: '/jwt/refresh-token',
   logoutEndpoint: 'http://localhost:5000/users/logout',
+
+  // loginEndpoint: 'http://backend.nextbill.io/users/login',
+  // registerEndpoint: 'http://backend.nextbill.io/users',
+  // refreshEndpoint: '/jwt/refresh-token',
+  // logoutEndpoint: 'http://backend.nextbill.io/users/logout',
 
   // ** This will be prefixed in authorization header with token
   // ? e.g. Authorization: Bearer <token>

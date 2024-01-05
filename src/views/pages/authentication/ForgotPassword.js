@@ -1,5 +1,6 @@
 // ** React Imports
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 // ** Reactstrap Imports
 import { Row, Col, CardTitle, CardText, Form, Label, Input, Button } from 'reactstrap'
@@ -20,11 +21,64 @@ import illustrationsDark from '@src/assets/images/pages/forgot-password-v2-dark.
 // ** Styles
 import '@styles/react/pages/page-authentication.scss'
 
+import { forgotPassword, changePassword } from '../../../utility/api'
+
 const ForgotPassword = () => {
+
+
+
   // ** Hooks
   const { skin } = useSkin()
 
   const source = skin === 'dark' ? illustrationsDark : illustrationsLight
+
+  const initialFormData = {
+    email: '',
+    code: '',
+    pass: ''
+  }
+
+  const [formData, setFormData] = useState(initialFormData)
+  const [emailOpen, setEmailOpen] = useState(true)
+  const [passOpen, setPassOpen] = useState(false)
+  const [messageOpen, setMessageOpen] = useState(false)
+  const [message, setMessage] = useState('')
+
+  const handleInputChange = (field, value) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [field]: value
+    }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const response = await forgotPassword(formData)
+    if (response.status === 200) {
+      setEmailOpen(false)
+      setPassOpen(true)
+    }
+
+  }
+
+  const handlePassChange = async (e) => {
+    e.preventDefault()
+    const response = await changePassword(formData)
+
+    if (response.status === 200) {
+      setMessage("Password Changed Successfully")
+    } else if (response.status === 400) {
+      setMessage("Could Not Change Password")
+    } else {
+      setMessage("Server Error")
+    }
+
+    setEmailOpen(false)
+    setPassOpen(false)
+    setMessageOpen(true)
+
+  }
+
 
   if (!isUserLoggedIn()) {
     return (
@@ -86,33 +140,90 @@ const ForgotPassword = () => {
               <img className='img-fluid' src={source} alt='Login Cover' />
             </div>
           </Col>
-          <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
-            <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
-              <CardTitle tag='h2' className='fw-bold mb-1'>
-                Forgot Password? 🔒
-              </CardTitle>
-              <CardText className='mb-2'>
-                Enter your email and we'll send you instructions to reset your password
-              </CardText>
-              <Form className='auth-forgot-password-form mt-2' onSubmit={e => e.preventDefault()}>
-                <div className='mb-1'>
-                  <Label className='form-label' for='login-email'>
-                    Email
-                  </Label>
-                  <Input type='email' id='login-email' placeholder='john@example.com' autoFocus />
-                </div>
-                <Button color='primary' block>
-                  Send reset link
-                </Button>
-              </Form>
-              <p className='text-center mt-2'>
-                <Link to='/login'>
-                  <ChevronLeft className='rotate-rtl me-25' size={14} />
-                  <span className='align-middle'>Back to login</span>
-                </Link>
-              </p>
+          {emailOpen ? (
+            <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+              <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
+                <CardTitle tag='h2' className='fw-bold mb-1'>
+                  Forgot Password? 🔒
+                </CardTitle>
+                <CardText className='mb-2'>
+                  Enter your email to start password recovery.
+                </CardText>
+                <Form className='auth-forgot-password-form mt-2' onSubmit={handleSubmit}>
+                  <div className='mb-1'>
+                    <Label className='form-label' for='login-email'>
+                      Email
+                    </Label>
+                    <Input type='email' id='email' value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)} autoFocus />
+                  </div>
+                  <Button color='primary' block>
+                    Send Code
+                  </Button>
+                </Form>
+                <p className='text-center mt-2'>
+                  <Link to='/login'>
+                    <ChevronLeft className='rotate-rtl me-25' size={14} />
+                    <span className='align-middle'>Back to login</span>
+                  </Link>
+                </p>
+              </Col>
             </Col>
-          </Col>
+          ) : null}
+          {passOpen ? (
+            <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+              <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
+                <CardTitle tag='h2' className='fw-bolder mb-1'>
+                  Change Password 💬
+                </CardTitle>
+                <CardText className='mb-75'>
+                  We sent a verification code to your email. Enter the code from the email and the new password.
+                </CardText>
+                <CardText className='fw-bolder mb-2'>{formData.email}</CardText>
+                <Form className='mt-2' onSubmit={handlePassChange}>
+                  <h6>Type your 6 digit security code</h6>
+                  <div className='mb-1'>
+                    <Label className='form-label' for='code'>
+                      Security Code
+                    </Label>
+                    <Input id='code' value={formData.code}
+                      onChange={(e) => handleInputChange('code', e.target.value)} autoFocus />
+                  </div>
+                  <div className='mb-1'>
+                    <Label className='form-label' for='pass'>
+                      New Password
+                    </Label>
+                    <Input
+                      type='password'
+                      id='pass'
+                      value={formData.pass}
+                      onChange={(e) => handleInputChange('pass', e.target.value)}
+                      autoFocus
+                    />
+                  </div>
+                  <Button color='primary' block>
+                    Change Password
+                  </Button>
+                </Form>
+
+              </Col>
+            </Col>
+          ) : null}
+          {messageOpen ? (
+            <Col className='d-flex align-items-center auth-bg px-2 p-lg-5' lg='4' sm='12'>
+              <Col className='px-xl-2 mx-auto' sm='8' md='6' lg='12'>
+                <CardTitle tag='h2' className='fw-bolder mb-1'>
+                  Change Password 💬
+                </CardTitle>
+                <CardText className='mb-75'>
+                  {message}
+                  <br/>
+                  <Link to='/login'>Return to login</Link>
+                </CardText>
+              </Col>
+            </Col>
+
+          ) : null}
         </Row>
       </div>
     )

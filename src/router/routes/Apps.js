@@ -10,6 +10,7 @@ const Calendar = lazy(() => import("../../views/apps/calendar"));
 
 const CompanySettings = lazy(() => import("../../views/apps/company/settings"));
 const CompanyDetails = lazy(() => import("../../views/apps/company/details"));
+const PaymentTerms = lazy(() => import("../../views/apps/company/paymentTerms"));
 
 const InvoiceAdd = lazy(() => import("../../views/apps/invoice/add"));
 const InvoiceList = lazy(() => import("../../views/apps/invoice/list"));
@@ -21,6 +22,7 @@ const InvoiceDrafts = lazy(() => import("../../views/apps/invoice/drafts"));
 const EstimateList = lazy(() => import("../../views/apps/estimate/list"));
 const EstimateAdd = lazy(() => import("../../views/apps/estimate/add"));
 const EstimateEdit = lazy(() => import("../../views/apps/estimate/edit"));
+const EstimatePreview = lazy(() => import("../../views/apps/estimate/preview"));
 
 const EcommerceShop = lazy(() => import("../../views/apps/ecommerce/shop"));
 const EcommerceDetail = lazy(() => import("../../views/apps/ecommerce/detail"));
@@ -120,6 +122,10 @@ const AppRoutes = [
     path: "/apps/company/settings",
   },
   {
+    element: <PaymentTerms />,
+    path: "/apps/company/paymentTerms",
+  },
+  {
     element: <CompanyDetails />,
     path: "/apps/company/details",
   },
@@ -140,6 +146,10 @@ const AppRoutes = [
     element: <EstimateEdit />,
     path: "/apps/estimate/edit/:id"
 
+  },
+  {
+    element: <EstimatePreview />,
+    path: "/apps/estimate/preview/:id",
   },
   {
     element: <InvoicePreview />,

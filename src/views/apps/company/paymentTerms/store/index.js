@@ -1,24 +1,29 @@
-// ** Redux Imports
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { fetchPaymentTerms } from '../../../../../utility/api';
+// // ** Redux Imports
+// import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+// import { fetchPaymentTerms } from '../../../../../utility/api'
 
-export const getPaymentTerms = createAsyncThunk('appPaymentTerms/getPaymentTerms', async () => {
-  const response = await fetchPaymentTerms();
-  return response.data;
-});
+// // ** Axios Imports
+// import axios from 'axios'
 
-export const appPaymentTermsSlice = createSlice({
-  name: 'appPaymentTerms',
-  initialState: {
-    paymentTerms: [],
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getPaymentTerms.fulfilled, (state, action) => {
-      state.paymentTerms = action.payload;
-    });
-  },
-});
+// export const getData = createAsyncThunk('appPaymentTerms/getData', async () => {
+//   const response = await fetchPaymentTerms()
+//   return {
+//     data: response.data,
+//   }
+// })
 
-export default appPaymentTermsSlice.reducer;
+
+// export const appPaymentTermsSlice = createSlice({
+//   name: 'appPaymentTerms',
+//   initialState: {
+//     data: []
+//   },
+//   reducers: {},
+//   extraReducers: builder => {
+//     builder.addCase(getData.fulfilled, (state, action) => {
+//       state.data = action.payload.data
+//     })
+//   }
+// })
+
+// export default appPaymentTermsSlice.reducer

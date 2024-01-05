@@ -217,8 +217,6 @@ const CustomerList = () => {
       return store.data
     } else if (store.data.length === 0 && isFiltered) {
       return []
-    } else {
-      return store.allData.slice(0, rowsPerPage)
     }
   }
 
@@ -249,7 +247,7 @@ const CustomerList = () => {
 
     // Call the addProduct API function to add the new product
 
-    console.log(invoicingAddress);
+    // console.log(invoicingAddress);
     try {
       const newCustomer = {
         name,

@@ -15,7 +15,6 @@ import calendar from '@src/views/apps/calendar/store'
 import ecommerce from '@src/views/apps/ecommerce/store'
 import dataTables from '@src/views/tables/data-tables/store'
 import permissions from '@src/views/apps/roles-permissions/store'
-import paymentTerms from '@src/views/apps/company/paymentTerms/store'
 
 const rootReducer = {
   auth,
@@ -33,8 +32,7 @@ const rootReducer = {
   calendar,
   ecommerce,
   dataTables,
-  permissions,
-  paymentTerms
+  permissions
 }
 
 export default rootReducer

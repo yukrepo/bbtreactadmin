@@ -64,7 +64,7 @@ export const columns = [
     sortField: '_id',
     minWidth: '107px',
     // selector: row => row.id,
-    cell: row => <Link to={`/apps/estimate/preview/${row.id}`}>{`#${row.refNo}`}</Link>
+    cell: row => <Link to={`/apps/estimate/preview/${row._id}`}>{`#${row.refNo}`}</Link>
   },
   // {
   //   sortable: true,
@@ -175,10 +175,6 @@ export const columns = [
             >
               <Trash size={14} className='me-50' />
               <span className='align-middle'>Delete</span>
-            </DropdownItem>
-            <DropdownItem tag='a' href='/' className='w-100' onClick={e => e.preventDefault()}>
-              <Copy size={14} className='me-50' />
-              <span className='align-middle'>Duplicate</span>
             </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
