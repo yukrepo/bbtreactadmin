@@ -25,6 +25,7 @@ const EstimatePreview = () => {
             // console.log(response.data.customer)
             setEstimate(response.data.task)
             setCustomer(response.data.customer)
+            console.log(response.data.task)
             const apdf = getStaticFileUrl(response.data.task.pdf)
             setPdf(apdf)
             setItems(response.data.task.items)

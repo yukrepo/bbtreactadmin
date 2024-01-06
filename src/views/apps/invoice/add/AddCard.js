@@ -13,7 +13,7 @@ import { SlideDown } from "react-slidedown";
 import { X, Plus, Hash } from "react-feather";
 import Select, { components } from "react-select";
 
-import { getAllCustomers, getInvoiceRef, fetchCompany, getAllProducts } from "../../../../utility/api";
+import { getAllCustomers, getInvoiceRef, fetchCompany, getAllProducts, getStaticFileUrl } from "../../../../utility/api";
 
 // ** Reactstrap Imports
 import { selectThemeColors } from "@utils";
@@ -41,13 +41,14 @@ const AddCard = () => {
   // ** States
   const [count, setCount] = useState(1)
   const [value, setValue] = useState({})
+  const [logo, setLogo] = useState({})
   const [customer, setCustomer] = useState(null)
   const [open, setOpen] = useState(false)
   const [clients, setClients] = useState(null)
   const [selected, setSelected] = useState(null)
   const [picker, setPicker] = useState(new Date())
   const [invoiceNumber, setInvoiceNumber] = useState(false)
-  const [company, setCompany] = useState(false)
+  const [company, setCompany] = useState({})
   const [dueDatepicker, setDueDatePicker] = useState(new Date())
   const [products, setProducts] = useState(null)
   const [total, setTotal] = useState(0);
@@ -67,7 +68,12 @@ const AddCard = () => {
     }
   ]);
 
-  
+  const fetchCompanyDetails = async () => {
+    const response = await fetchCompany()
+    setCompany(response.data)
+    const logodem = getStaticFileUrl(response.data.logo)
+    setLogo(logodem)
+  }
 
   useEffect(() => {
 
@@ -86,9 +92,7 @@ const AddCard = () => {
       setClients(response.data);
     });
 
-    fetchCompany().then((response) => {
-      setCompany(response.data)
-    }, [])
+    fetchCompanyDetails()
 
 
     getInvoiceRef()
@@ -104,7 +108,7 @@ const AddCard = () => {
   //gather data for save 
 
   const gatherDataForSave = () => {
-    const cleanedItemDetails = itemDetails.map(({ selectedProduct, quantity, discountPercentage,price }) => ({
+    const cleanedItemDetails = itemDetails.map(({ selectedProduct, quantity, discountPercentage, price }) => ({
       product: selectedProduct,
       quantity,
       discount: discountPercentage,
@@ -270,7 +274,7 @@ const AddCard = () => {
   const handleInvoiceToChange = (data) => {
     const selectedCustomer = clients.find((client) => client.name === data.value);
 
-    
+
     setValue(data);
     setCustomer(selectedCustomer ? selectedCustomer._id : null);
   };
@@ -288,10 +292,13 @@ const AddCard = () => {
                 <div>
 
                   <div className="logo-wrapper">
-                    <img></img>
-                    <h3 className="text-primary invoice-logo">{company.name}</h3>
-
+                    <img
+                      src={logo}
+                      alt="Stock Logo"
+                      style={{ maxHeight: "80px" }}
+                    /> 
                   </div>
+                  <h3 className="text-primary invoice-logo">{company.name}</h3>
                   <p className="card-text mb-25">
                     {company.addLine1}, {company.addLine2}
                   </p>
